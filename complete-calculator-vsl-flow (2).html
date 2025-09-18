@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Your Dormant Customer Goldmine - Revenue Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ===========================================
+           CALCULATOR PAGE STYLES 
+           =========================================== */
+        .calculator-page {
+            display: block;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            padding: 20px;
+        }
+
+        .calculator-page.hidden {
+            display: none;
+        }
+
+        .logo-header {
+            text-align: center;
+            padding: 20px 20px 10px 20px;
+            background: #000;
+        }
+
+        .main-logo {
+            max-height: 80px;
+            height: auto;
+            max-width: 300px;
+            width: auto;
+        }
+
+        .demo-header {
+            text-align: center;
+            padding: 10px 20px 30px 20px;
+        }
+
+        .demo-header h1 {
+            color: #FFD700;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            color: #FFA500;
+            font-size: 1.2rem;
+        }
+
+        .calc-container {
+            max-width: 400px;
+            margin: 0 auto;
+            height: 600px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 3px solid #FFD700;
+            overflow: hidden;
+            position: relative;
+            animation: breathingGlow 3s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes breathingGlow {
+            0%, 100% {
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.4);
+                border-color: #FFD700;
+            }
+            50% {
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.8);
+                border-color: #FFA500;
+            }
+        }
+
+        @keyframes flash {
+            0% {
+                opacity: 1;
+                color: #32CD32;
+                text-shadow: 0 0 5px #32CD32;
+            }
+            50% {
+                opacity: 0.3;
+                color: #90EE90;
+                text-shadow: 0 0 10px #90EE90;
+            }
+            100% {
+                opacity: 1;
+                color: #32CD32;
+                text-shadow: 0 0 5px #32CD32;
+            }
+        }
+
+        .calc-container .flash-text {
+            animation: flash 0.8s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .calc-container .header {
+            background: linear-gradient(135deg, #228B22 0%, #32CD32 100%);
+            color: white;
+            padding: 20px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calc-container .header h1 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.2;
+        }
+
+        .calc-container .header-instruction {
+            font-size: 0.9rem;
+            color: #FFD700;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .calc-container .main-input-area {
+            flex: 1;
+            padding: 30px 25px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: padding 0.3s ease, gap 0.3s ease;
+        }
+
+        .calc-container .question-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        .calc-container .question-title {
+            color: #FFD700;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .calc-container .input-wrapper {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .calc-container .main-select {
+            width: 100%;
+            padding: 18px 22px;
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            transition: all 0.3s ease;
+            min-height: 60px;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23FFD700' d='M13.854 5.146L8 10.999 2.146 5.146A.5.5 0 00.853 5.854L7.5 12.5a.707.707 0 001 0l6.647-6.646a.5.5 0 00-.293-.854z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            padding-right: 55px;
+            cursor: pointer;
+        }
+
+        .calc-container .main-select:focus {
+            outline: none;
+            border-color: #FFA500;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .calc-container .yes-no-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .calc-container .yes-no-btn {
+            flex: 1;
+            padding: 18px 25px;
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+        }
+
+        .calc-container .yes-no-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .calc-container .yes-no-btn.selected {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .calc-container .price-controls, .calc-container .customer-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .calc-container .price-btn, .calc-container .customer-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            user-select: none;
+        }
+
+        .calc-container .price-display {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            padding: 15px 25px;
+            color: #FFD700;
+            font-size: 1.6rem;
+            font-weight: bold;
+            min-width: 160px;
+            text-align: center;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+
+        .calc-container .price-display:focus {
+            outline: none;
+            border-color: #FFA500;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), inset 0 2px 10px rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .calc-container .customer-display {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            padding: 15px 25px;
+            color: #FFD700;
+            min-width: 160px;
+            text-align: center;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+
+        .calc-container .customer-display:focus-within {
+            border-color: #FFA500;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), inset 0 2px 10px rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .calc-container .customer-number {
+            background: transparent;
+            border: none;
+            color: #FFD700;
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+            text-align: center;
+            outline: none;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .calc-container .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFD700;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .calc-container .back-button:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+            transform: scale(1.05);
+        }
+
+        .calc-container .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .calc-container .question-header .back-button {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .calc-container .customer-label {
+            font-size: 10pt;
+            font-weight: normal;
+            margin-bottom: 2px;
+        }
+
+        .calc-container .calculate-button {
+            width: 100%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            min-height: 60px;
+        }
+
+        .calc-container .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .calc-container .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .calc-container .step-dot.active {
+            background: #FFD700;
+            transform: scale(1.2);
+        }
+
+        .calc-container .step-dot.completed {
+            background: #32CD32;
+        }
+
+        .calc-container .interaction-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .calc-container .tap-icon {
+            color: #FFD700;
+            font-size: 1rem;
+        }
+
+        .calc-container .disclaimer {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #FFD700;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.75rem;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .calc-container .price-hint, .calc-container .customer-hint {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Disclosures Footer Inside Frame */
+        .disclosures-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .disclosures-link {
+            color: rgba(255, 165, 0, 0.8);
+            text-decoration: underline;
+            font-size: 0.8rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .disclosures-link:hover {
+            color: #FFD700;
+        }
+
+        /* ===========================================
+           CELEBRATION PAGE STYLES 
+           =========================================== */
+        .celebration-page {
+            display: none;
+            min-height: 100vh;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .celebration-page.active {
+            display: block;
+        }
+
+        /* Fire Effects */
+        .fire-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            animation: fireShow 5s linear forwards;
+        }
+
+        .fire {
+            position: absolute;
+            width: 4px;
+            height: 40px;
+            background: linear-gradient(to top, #ff4500 0%, #ff6500 30%, #ff8500 60%, #ffaa00 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes fireShow {
+            0%, 100% { opacity: 0; }
+            5%, 95% { opacity: 1; }
+        }
+
+        @keyframes flicker {
+            0% { 
+                transform: scale(1) rotate(-2deg);
+                filter: brightness(1);
+            }
+            100% { 
+                transform: scale(1.1) rotate(2deg);
+                filter: brightness(1.3);
+            }
+        }
+
+        /* Gold Coins */
+        .coins-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            border-radius: 50%;
+            border: 2px solid #B8860B;
+            animation: coinFall 3s linear infinite;
+        }
+
+        .coin::before {
+            content: '$';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 16px;
+            color: #8B4513;
+        }
+
+        @keyframes coinFall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 50px)) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* Balloons */
+        .balloons-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: balloonRise 8s linear infinite;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 20px;
+            background: #666;
+        }
+
+        .balloon.red { background: linear-gradient(135deg, #ff6b6b, #ee5a52); }
+        .balloon.blue { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .balloon.green { background: linear-gradient(135deg, #95e1d3, #fce38a); }
+        .balloon.purple { background: linear-gradient(135deg, #d63384, #9d4edd); }
+        .balloon.yellow { background: linear-gradient(135deg, #ffd93d, #ffcd3c); }
+
+        @keyframes balloonRise {
+            0% {
+                transform: translateY(100px) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0.6;
+            }
+        }
+
+        /* Celebration Content */
+        .celebration-content {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .celebration-headline {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            margin-bottom: 30px;
+            animation: pulseGlow 2s ease-in-out infinite;
+            line-height: 1.1;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { 
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 30px #FFD700;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 50px #FFD700, 0 0 70px #FFA500;
+                transform: scale(1.02);
+            }
+        }
+
+        .big-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .celebration-loading {
+            font-size: 1.5rem;
+            color: #32CD32;
+            margin-top: 30px;
+        }
+
+        /* ===========================================
+           VSL LANDING PAGE STYLES 
+           =========================================== */
+        .vsl-page {
+            display: none;
+            background: #000000;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .vsl-page.active {
+            display: block;
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            text-align: center;
+            padding: 20px;
+            background: #000;
+        }
+        
+        .company-logo {
+            max-height: 80px;
+            height: auto;
+            max-width: 300px;
+            width: auto;
+        }
+
+        /* Rotating Headlines */
+        .rotating-headline {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .headline-item {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            animation: rotateHeadline 40s infinite;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            line-height: 1.2;
+        }
+
+        .headline-item:nth-child(1) { animation-delay: 0s; }
+        .headline-item:nth-child(2) { animation-delay: 4s; }
+        .headline-item:nth-child(3) { animation-delay: 8s; }
+        .headline-item:nth-child(4) { animation-delay: 12s; }
+        .headline-item:nth-child(5) { animation-delay: 16s; }
+        .headline-item:nth-child(6) { animation-delay: 20s; }
+        .headline-item:nth-child(7) { animation-delay: 24s; }
+        .headline-item:nth-child(8) { animation-delay: 28s; }
+        .headline-item:nth-child(9) { animation-delay: 32s; }
+        .headline-item:nth-child(10) { animation-delay: 36s; }
+
+        @keyframes rotateHeadline {
+            0%, 10% { opacity: 0; transform: translateY(20px); }
+            2%, 8% { opacity: 1; transform: translateY(0); }
+            10%, 100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* VSL Section */
+        .vsl-section {
+            background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vsl-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vsl-subheadline {
+            font-size: 1.5rem;
+            color: #32CD32;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .vsl-player-wrapper {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: 4px solid #FFD700;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(255,215,0,0.3);
+            position: relative;
+        }
+
+        /* Personalized Stats Section */
+        .personalized-stats {
+            background: #000000;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .stats-headline {
+            font-size: 2.5rem;
+            color: #FFD700;
+            font-weight: 900;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: white;
+            border-top: 4px solid #FFD700;
+            border-radius: 15px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-title {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: #32CD32;
+            margin-bottom: 20px;
+            text-shadow: none;
+            line-height: 1;
+        }
+
+        .stat-description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .stat-badge {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: #FFD700;
+            color: #000;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.4);
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.2;
+            padding: 15px;
+        }
+
+        .stat-badge-number {
+            font-size: 2rem;
+            margin-bottom: 3px;
+        }
+
+        /* Cost of Inaction Section */
+        .cost-section {
+            background: #000000;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cost-headline {
+            font-size: 2.5rem;
+            color: #ff4500;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .cost-subheadline {
+            font-size: 1.3rem;
+            color: #FFA500;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .delay-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .delay-item {
+            background: rgba(255,0,0,0.05);
+            border-left: 4px solid #ff4500;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .delay-item:hover {
+            background: rgba(255,0,0,0.1);
+            transform: translateX(10px);
+        }
+
+        .delay-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .delay-period {
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .delay-total {
+            color: #ff4500;
+            font-weight: 900;
+            font-size: 1.6rem;
+            text-shadow: 0 0 10px rgba(255,69,0,0.5);
+        }
+
+        .delay-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .delay-line-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        .delay-line-label {
+            color: #FFA500;
+        }
+
+        .delay-line-value {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        /* CTA Buttons */
+        .cta-section {
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 100%);
+        }
+
+        .cta-button-primary {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            padding: 25px 50px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(255,215,0,0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 20px 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.6);
+        }
+
+        .cta-urgency {
+            color: #ff4500;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .calc-container {
+                margin: 0 10px;
+                height: auto;
+                min-height: 600px;
+            }
+
+            .celebration-headline {
+                font-size: 2.5rem;
+            }
+            
+            .big-number {
+                font-size: 3rem;
+            }
+            
+            .headline-item {
+                font-size: 2rem;
+            }
+            
+            .stats-headline {
+                font-size: 1.8rem;
+            }
+            
+            .cost-headline {
+                font-size: 1.8rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .cta-button-primary {
+                padding: 20px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===========================================
+         CALCULATOR PAGE 
+         =========================================== -->
+    <div class="calculator-page" id="calculatorPage">
+        <div class="logo-header">
+            <img src="https://raw.githubusercontent.com/youroutsourcecmo-revival/Exit-Intent/main/CMO%20Revival%20Logo.png" alt="CMO Revival Logo" class="main-logo">
+        </div>
+        
+        <div class="demo-header">
+            <h1>Discover Your Hidden Revenue</h1>
+            <p>Calculate your dormant customer goldmine in 6 simple steps</p>
+        </div>
+
+        <div class="calc-container">
+            <div class="header">
+                <h1 id="headerTitle">DISCOVER YOUR HIDDEN REVENUE GOLDMINE</h1>
+                <div class="header-instruction">Discover your annual revenue potential in 6 clicks</div>
+            </div>
+            
+            <div class="main-input-area" id="mainInputArea">
+                <div class="step-indicator" id="stepIndicator">
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="question-container" id="questionContainer">
+                    <!-- Questions will be dynamically inserted here -->
+                </div>
+                
+                <div class="disclosures-footer">
+                    <a href="#" class="disclosures-link" onclick="openDisclosures()">Disclosures</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================================
+         CELEBRATION PAGE 
+         =========================================== -->
+    <div class="celebration-page" id="celebrationPage">
+        <!-- Fire Effects Container -->
+        <div class="fire-container" id="fireContainer"></div>
+
+        <!-- Gold Coins Container -->
+        <div class="coins-container" id="coinsContainer"></div>
+
+        <!-- Balloons Container -->
+        <div class="balloons-container" id="balloonsContainer"></div>
+
+        <!-- Celebration Content -->
+        <div class="celebration-content">
+            <h1 class="celebration-headline">
+                CALCULATING YOUR GOLDMINE...
+            </h1>
+            
+            <div class="big-number" id="celebrationNumber">
+                <!-- Number will be inserted here -->
+            </div>
+            
+            <div class="celebration-loading">
+                Preparing your personalized report...
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================================
+         VSL LANDING PAGE 
+         =========================================== -->
+    <div class="vsl-page" id="vslPage">
+        <!-- Logo Header -->
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/youroutsourcecmo-revival/Exit-Intent/main/CMO%20Revival%20Logo.png" alt="CMO Revival" class="company-logo">
+        </div>
+        
+        <!-- Primary VSL Section -->
+        <div class="vsl-section">
+            <div class="vsl-container">
+                <div class="rotating-headline">
+                    <h1 class="headline-item">
+                        CONGRATULATIONS! Your 5-Day Campaign Could Generate Up to <span style="color: #32CD32;">$<span id="vslRevenue1">75,000</span></span>
+                    </h1>
+                    <h1 class="headline-item">
+                        AMAZING! Your Personalized Campaign Shows <span style="color: #32CD32;">$<span id="vslRevenue2">75,000</span></span> Potential
+                    </h1>
+                    <h1 class="headline-item">
+                        WOW! See How You Could Reach <span style="color: #32CD32;">$<span id="vslRevenue3">75,000</span></span> in Just 5 Days
+                    </h1>
+                    <h1 class="headline-item">
+                        YOUR RESULTS ARE IN! Campaign Projection Shows <span style="color: #32CD32;">$<span id="vslRevenue4">75,000</span></span>
+                    </h1>
+                    <h1 class="headline-item">
+                        SUCCESS MAPPED! Your <span style="color: #32CD32;">$<span id="vslRevenue5">75,000</span></span> Campaign Plan Revealed
+                    </h1>
+                    <h1 class="headline-item">
+                        INCREDIBLE! Your Custom Campaign Targets <span style="color: #32CD32;">$<span id="vslRevenue6">75,000</span></span> in Results
+                    </h1>
+                    <h1 class="headline-item">
+                        REVEALED: Your Estimated Campaign Value - <span style="color: #32CD32;">$<span id="vslRevenue7">75,000</span></span>
+                    </h1>
+                    <h1 class="headline-item">
+                        BOOM! Based on Your Inputs, You're Looking at <span style="color: #32CD32;">$<span id="vslRevenue8">75,000</span></span>
+                    </h1>
+                    <h1 class="headline-item">
+                        FANTASTIC! Your Campaign Model Shows <span style="color: #32CD32;">$<span id="vslRevenue9">75,000</span></span> Is Possible
+                    </h1>
+                    <h1 class="headline-item">
+                        YOU'RE ON TRACK! Your Numbers Point to <span style="color: #32CD32;">$<span id="vslRevenue10">75,000</span></span>
+                    </h1>
+                </div>
+                
+                <p class="vsl-subheadline">
+                    Watch this 30-minute case study revealing how Kevin turned 780 dormant customers into $73,000 in just 5 days
+                </p>
+
+                <!-- VSL Player -->
+                <div class="vsl-player-wrapper">
+                    <div id="ppdiv-wrapper-2170248" style="width: 100%;height: auto;">
+                        <div id="ppdiv_2170248" class="pp-video-container" style="width: 100%; height: auto;"></div>
+                    </div>
+                    <script type="text/javascript" src="https://s3.amazonaws.com/press-play-v2/2132064/2170248/outer.js"></script>
+                </div>
+
+                <button class="cta-button-primary" onclick="bookStrategy()">
+                    📅 BOOK YOUR STRATEGY CALL NOW
+                </button>
+            </div>
+        </div>
+
+        <!-- Your Personalized Revenue Stats -->
+        <div class="personalized-stats">
+            <h2 class="stats-headline">Your Personalized Dormant Customer Goldmine</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-title">Dormant Customers</div>
+                    <div class="stat-number" id="statCustomers">500</div>
+                    <div class="stat-description">
+                        Past customers who already know, like, and trust you - waiting to be reactivated.
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-title">First Campaign Month</div>
+                    <div class="stat-number" id="statFirstMonth">$15,000</div>
+                    <div class="stat-description">
+                        Your very first 5-day campaign will generate immediate cash flow. That's more than most businesses spend on advertising in 6 months, except this costs you nothing.
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-title">Weekly Revenue Potential</div>
+                    <div class="stat-number" id="statWeekly">$3,461</div>
+                    <div class="stat-description">
+                        Every single week you wait is money lost forever. Your competitors are fighting for new customers while you ignore the ones who already love you.
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-title">Cost Per Acquisition</div>
+                    <div class="stat-number">$0</div>
+                    <div class="stat-description">
+                        Zero advertising costs. Zero lead generation expenses. These customers already know, like, and trust you. Your ROI is literally infinite.
+                    </div>
+                    <div class="stat-badge">
+                        <div>GUARANTEED</div>
+                        <div class="stat-badge-number">$0</div>
+                        <div>ACQUISITION<br>COST</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-title">Annual Potential</div>
+                    <div class="stat-number" id="statAnnual">$180,000</div>
+                    <div class="stat-description">
+                        Your total revenue potential from dormant customers over the next 12 months using our proven system.
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">♾️</div>
+                    <div class="stat-title">ROI Percentage</div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-description">
+                        When your cost is zero and your returns are massive, the ROI is mathematically infinite. No other marketing channel can match this.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost of Waiting -->
+        <div class="cost-section">
+            <h2 class="cost-headline">⚠️ WARNING: Every Day You Wait Costs You Money</h2>
+            <p class="cost-subheadline">
+                Your dormant customers are forgetting about you while your competitors are actively pursuing them...
+            </p>
+            
+            <div class="delay-timeline">
+                <div class="delay-item">
+                    <div class="delay-header">
+                        <span class="delay-period">Wait 1 Week</span>
+                        <span class="delay-total" id="costTotal1Week">-$3,461</span>
+                    </div>
+                    <div class="delay-breakdown">
+                        <div class="delay-line-item">
+                            <span class="delay-line-label">Lost Revenue:</span>
+                            <span class="delay-line-value" id="costRevenue1Week">-$3,461</span>
+                        </div>
+                        <div class="delay-line-item" id="costAdSpend1WeekRow" style="display: none;">
+                            <span class="delay-line-label">Continued Ad Spend:</span>
+                            <span class="delay-line-value" id="costAdSpend1Week">-$0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="delay-item">
+                    <div class="delay-header">
+                        <span class="delay-period">Wait 2 Weeks</span>
+                        <span class="delay-total" id="costTotal2Weeks">-$6,923</span>
+                    </div>
+                    <div class="delay-breakdown">
+                        <div class="delay-line-item">
+                            <span class="delay-line-label">Lost Revenue:</span>
+                            <span class="delay-line-value" id="costRevenue2Weeks">-$6,923</span>
+                        </div>
+                        <div class="delay-line-item" id="costAdSpend2WeeksRow" style="display: none;">
+                            <span class="delay-line-label">Continued Ad Spend:</span>
+                            <span class="delay-line-value" id="costAdSpend2Weeks">-$0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="delay-item">
+                    <div class="delay-header">
+                        <span class="delay-period">Wait 1 Month</span>
+                        <span class="delay-total" id="costTotal1Month">-$15,000</span>
+                    </div>
+                    <div class="delay-breakdown">
+                        <div class="delay-line-item">
+                            <span class="delay-line-label">Lost Revenue:</span>
+                            <span class="delay-line-value" id="costRevenue1Month">-$15,000</span>
+                        </div>
+                        <div class="delay-line-item" id="costAdSpend1MonthRow" style="display: none;">
+                            <span class="delay-line-label">Continued Ad Spend:</span>
+                            <span class="delay-line-value" id="costAdSpend1Month">-$0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="delay-item">
+                    <div class="delay-header">
+                        <span class="delay-period">Wait 6 Months</span>
+                        <span class="delay-total" id="costTotal6Months">-$90,000</span>
+                    </div>
+                    <div class="delay-breakdown">
+                        <div class="delay-line-item">
+                            <span class="delay-line-label">Lost Revenue:</span>
+                            <span class="delay-line-value" id="costRevenue6Months">-$90,000</span>
+                        </div>
+                        <div class="delay-line-item" id="costAdSpend6MonthsRow" style="display: none;">
+                            <span class="delay-line-label">Continued Ad Spend:</span>
+                            <span class="delay-line-value" id="costAdSpend6Months">-$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="cta-button-primary" onclick="bookStrategy()">
+                📅 BOOK YOUR STRATEGY CALL
+            </button>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="cta-section">
+            <h2 style="color: #FFD700; font-size: 2.5rem; font-weight: 900; margin-bottom: 20px;">
+                Your Next Step Is Simple:
+            </h2>
+            <p style="color: white; font-size: 1.3rem; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Book your strategy call to turn your <span id="ctaCustomers" style="color: #32CD32; font-weight: bold;">500 dormant customers</span> into <span id="ctaRevenue" style="color: #32CD32; font-weight: bold;">$75,000</span> using the proven 5-day system
+            </p>
+            
+            <button class="cta-button-primary" onclick="bookStrategy()">
+                📅 BOOK YOUR STRATEGY CALL
+            </button>
+            
+            <p class="cta-urgency">
+                ⏰ Limited Availability: Only 5 strategy sessions available this week
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Calculator state management
+        window.calculatorData = {
+            businessType: '',
+            mainService: '',
+            servicePrice: 0,
+            hasAdvertising: false,
+            monthlyAdSpend: 0,
+            customerCount: 500
+        };
+        
+        window.currentStep = 1;
+        window.isProcessing = false;
+        window.currentPrice = 0;
+        window.currentAdSpend = 0;
+        window.currentCustomers = 500;
+        window.priceTimeout = null;
+        window.adSpendTimeout = null;
+        window.customerTimeout = null;
+        window.calculationResults = {};
+        
+        // Business Service Mappings
+        window.serviceMap = {
+            'Car Detailing': ['Ceramic Coating', 'Paint Protection Film', 'Full Detail Package', 'Interior Deep Clean', 'Paint Correction'],
+            'Cosmetic Surgery': ['Breast Augmentation', 'Tummy Tuck', 'Liposuction', 'Facelift', 'Brazilian Butt Lift'],
+            'Cosmetic Dentistry': ['Veneers', 'Teeth Whitening', 'Dental Implants', 'Invisalign', 'Smile Makeover'],
+            'Med Spa': ['Botox', 'Dermal Fillers', 'Laser Hair Removal', 'CoolSculpting', 'Chemical Peels'],
+            'General Dentistry': ['Dental Implants', 'Crowns', 'Root Canal', 'Teeth Cleaning', 'Oral Surgery'],
+            'Dermatology': ['Laser Treatments', 'Botox', 'Acne Treatment', 'Skin Cancer Screening', 'Chemical Peels'],
+            'Hair Restoration': ['Hair Transplant', 'PRP Therapy', 'Scalp Micropigmentation', 'Hair Loss Treatment', 'FUE Procedure'],
+            'Ophthalmology': ['LASIK Surgery', 'Cataract Surgery', 'Retinal Treatment', 'Glaucoma Treatment', 'Eye Exams'],
+            'Chiropractic': ['Spinal Adjustment', 'Physical Therapy', 'Massage Therapy', 'Pain Management', 'Wellness Care']
+        };
+        
+        // Industry-Specific Starting Prices
+        window.startingPrices = {
+            'Car Detailing': 500, 'Cosmetic Surgery': 8000, 'Cosmetic Dentistry': 2000,
+            'Med Spa': 800, 'General Dentistry': 1000, 'Dermatology': 600,
+            'Hair Restoration': 8000, 'Ophthalmology': 4000, 'Chiropractic': 200
+        };
+        
+        // Navigation Functions
+        window.goBackStep = function() {
+            if (window.isProcessing || window.currentStep <= 1) return;
+            
+            window.isProcessing = true;
+            window.currentStep--;
+            
+            // Clear any existing timeouts
+            if (window.priceTimeout) clearTimeout(window.priceTimeout);
+            if (window.adSpendTimeout) clearTimeout(window.adSpendTimeout);
+            if (window.customerTimeout) clearTimeout(window.customerTimeout);
+            
+            // Update step indicator
+            window.updateStepIndicator(window.currentStep);
+            
+            // Show appropriate question based on step
+            setTimeout(() => {
+                switch(window.currentStep) {
+                    case 1:
+                        window.showBusinessTypeQuestion();
+                        break;
+                    case 2:
+                        window.showServiceQuestion();
+                        break;
+                    case 3:
+                        window.showPriceQuestion();
+                        break;
+                    case 4:
+                        window.showAdvertisingQuestion();
+                        break;
+                    case 5:
+                        if (window.calculatorData.hasAdvertising) {
+                            window.showAdSpendQuestion();
+                        } else {
+                            // If no advertising, go back one more step
+                            window.currentStep--;
+                            window.updateStepIndicator(window.currentStep);
+                            window.showAdvertisingQuestion();
+                        }
+                        break;
+                    case 6:
+                        window.showCustomerQuestion();
+                        break;
+                }
+                window.isProcessing = false;
+            }, 300);
+        }
+        
+        // Calculator Functions
+        window.updateStepIndicator = function(step) {
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index < step - 1) {
+                    dot.classList.add('completed');
+                } else if (index === step - 1) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+        
+        window.showBusinessTypeQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="question-title">Kevin's 1st 5-day campaign netted him $73K… <span style="color: #32CD32; font-weight: 800;" class="flash-text">LET'S CALCULATE YOURS!</span> What type of business do you run?</div>
+                <div class="input-wrapper">
+                    <select class="main-select" id="businessSelect" onchange="selectBusinessType()" aria-label="Select your business type">
+                        <option value="">👆 Tap here to select your business type</option>
+                        <option value="Car Detailing">Car Detailing</option>
+                        <option value="Cosmetic Surgery">Cosmetic Surgery</option>
+                        <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                        <option value="Med Spa">Med Spa</option>
+                        <option value="General Dentistry">General Dentistry</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Hair Restoration">Hair Restoration</option>
+                        <option value="Ophthalmology">Ophthalmology</option>
+                        <option value="Chiropractic">Chiropractic</option>
+                    </select>
+                </div>
+                <div class="interaction-hint">
+                    <span class="tap-icon">👆</span>
+                    Tap the dropdown to select your business type
+                </div>
+            `;
+        }
+        
+        window.selectBusinessType = function() {
+            if (window.isProcessing) return;
+            const select = document.getElementById('businessSelect');
+            const value = select.value;
+            if (!value) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.businessType = value;
+            window.currentStep = 2;
+            window.updateStepIndicator(window.currentStep);
+            
+            setTimeout(() => {
+                window.showServiceQuestion();
+                window.isProcessing = false;
+            }, 500);
+        }
+        
+        window.showServiceQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            const services = window.serviceMap[window.calculatorData.businessType] || ['Custom Service'];
+            
+            let optionsHTML = '<option value="">👆 Tap here to select your most profitable service</option>';
+            services.forEach(service => {
+                optionsHTML += `<option value="${service}">${service}</option>`;
+            });
+            
+            container.innerHTML = `
+                <div class="question-title">Which offering earns you the most profit?</div>
+                <div class="input-wrapper">
+                    <select class="main-select" id="serviceSelect" onchange="selectService()" aria-label="Select your most profitable service">
+                        ${optionsHTML}
+                    </select>
+                </div>
+                <div class="interaction-hint">
+                    <span class="tap-icon">👆</span>
+                    Select your highest profit margin service
+                </div>
+            `;
+        }
+        
+        window.selectService = function() {
+            if (window.isProcessing) return;
+            const select = document.getElementById('serviceSelect');
+            const value = select.value;
+            if (!value) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.mainService = value;
+            window.currentStep = 3;
+            window.updateStepIndicator(window.currentStep);
+            
+            setTimeout(() => {
+                window.showPriceQuestion();
+                window.isProcessing = false;
+            }, 500);
+        }
+        
+        window.showPriceQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            const startingPrice = window.calculatorData.servicePrice || window.startingPrices[window.calculatorData.businessType] || 500;
+            window.currentPrice = startingPrice;
+            
+            container.innerHTML = `
+                <div class="question-header">
+                    <button class="back-button" onclick="goBackStep()">← Back</button>
+                </div>
+                <div class="price-container">
+                    <div class="question-title">What do you charge for ${window.calculatorData.mainService}?</div>
+                    <div class="price-controls">
+                        <button class="price-btn" onclick="adjustPrice(-50)" aria-label="Decrease price">−</button>
+                        <input type="text" class="price-display" id="priceDisplay" value="$${startingPrice.toLocaleString()}" onkeyup="handlePriceInput()" onfocus="clearPriceTimeout()" onblur="formatPriceInput()" />
+                        <button class="price-btn" onclick="adjustPrice(50)" aria-label="Increase price">+</button>
+                    </div>
+                    <div class="price-hint">Use +/- buttons OR click to type directly • Auto-advances in 2 seconds</div>
+                </div>
+            `;
+        }
+        
+        window.showAdvertisingQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            const hasAdvertising = window.calculatorData.hasAdvertising;
+            
+            container.innerHTML = `
+                <div class="question-header">
+                    <button class="back-button" onclick="goBackStep()">← Back</button>
+                </div>
+                <div class="question-title">Are you currently spending money on paid advertising? (Google Ads, Facebook Ads, etc.)</div>
+                <div class="yes-no-buttons">
+                    <button class="yes-no-btn ${hasAdvertising === true ? 'selected' : ''}" id="yesBtn" onclick="selectAdvertising(true)">Yes</button>
+                    <button class="yes-no-btn ${hasAdvertising === false ? 'selected' : ''}" id="noBtn" onclick="selectAdvertising(false)">No</button>
+                </div>
+                <div class="interaction-hint">
+                    <span class="tap-icon">👆</span>
+                    Tap Yes or No to continue
+                </div>
+            `;
+        }
+        
+        window.showAdSpendQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            const startingAdSpend = window.calculatorData.monthlyAdSpend || 2000;
+            window.currentAdSpend = startingAdSpend;
+            
+            container.innerHTML = `
+                <div class="question-header">
+                    <button class="back-button" onclick="goBackStep()">← Back</button>
+                </div>
+                <div class="price-container">
+                    <div class="question-title">What do you spend monthly on advertising?</div>
+                    <div class="price-controls">
+                        <button class="price-btn" onclick="adjustAdSpend(-100)" aria-label="Decrease ad spend">−</button>
+                        <input type="text" class="price-display" id="adSpendDisplay" value="$${startingAdSpend.toLocaleString()}" onkeyup="handleAdSpendInput()" onfocus="clearAdSpendTimeout()" onblur="formatAdSpendInput()" />
+                        <button class="price-btn" onclick="adjustAdSpend(100)" aria-label="Increase ad spend">+</button>
+                    </div>
+                    <div class="price-hint">Use +/- buttons OR click to type directly • Auto-advances in 2 seconds</div>
+                </div>
+            `;
+        }
+        
+        window.showCustomerQuestion = function() {
+            const container = document.getElementById('questionContainer');
+            const startingCustomers = window.calculatorData.customerCount || 500;
+            window.currentCustomers = startingCustomers;
+            
+            container.innerHTML = `
+                <div class="question-header">
+                    <button class="back-button" onclick="goBackStep()">← Back</button>
+                </div>
+                <div class="customer-container">
+                    <div class="question-title">How many past customers have you served that you would love to see <span style="color: #32CD32; font-weight: 800;">spend with you again</span>? (Kevin had 780) Your best guess.</div>
+                    <div class="customer-controls">
+                        <button class="customer-btn" onclick="adjustCustomers(-10)" aria-label="Decrease customer count">−</button>
+                        <div class="customer-display" id="customerDisplay">
+                            <input type="text" class="customer-number" id="customerNumberInput" value="${startingCustomers.toLocaleString()}" onkeyup="handleCustomerInput(event)" onfocus="clearCustomerTimeout()" onblur="formatCustomerInput()" />
+                            <div class="customer-label">dormant</div>
+                            <div class="customer-label">customers</div>
+                        </div>
+                        <button class="customer-btn" onclick="adjustCustomers(10)" aria-label="Increase customer count">+</button>
+                    </div>
+                    <div class="customer-hint">Use +/- buttons OR click to type directly • Auto-advances in 2 seconds</div>
+                </div>
+            `;
+        }
+        
+        window.showCalculateButton = function() {
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="question-header">
+                    <button class="back-button" onclick="goBackStep()">← Back</button>
+                </div>
+                <div class="question-title">Perfect! See your annual revenue potential vs advertising costs</div>
+                <div class="input-wrapper">
+                    <button class="calculate-button" onclick="calculateAndShowResults()">Calculate My ROI</button>
+                </div>
+                <div class="disclaimer">
+                    Projections are estimates based on inputs provided and industry data. Actual results vary significantly based on individual business factors. No earnings are guaranteed. This tool is for informational purposes only and does not constitute financial or business advice.
+                </div>
+                <div class="interaction-hint">
+                    <span class="tap-icon">🚀</span>
+                    Tap to reveal your annual revenue potential
+                </div>
+            `;
+        }
+
+        // Input handlers
+        window.handlePriceInput = function() {
+            const input = document.getElementById('priceDisplay');
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            if (value === '') {
+                value = '0';
+            }
+            
+            const numericValue = parseInt(value);
+            if (numericValue >= 50 && numericValue <= 50000) {
+                window.currentPrice = numericValue;
+                
+                if (window.priceTimeout) clearTimeout(window.priceTimeout);
+                
+                window.priceTimeout = setTimeout(() => {
+                    window.selectPrice();
+                }, 2000);
+            }
+        }
+
+        window.clearPriceTimeout = function() {
+            if (window.priceTimeout) clearTimeout(window.priceTimeout);
+        }
+
+        window.formatPriceInput = function() {
+            const input = document.getElementById('priceDisplay');
+            input.value = `$${window.currentPrice.toLocaleString()}`;
+        }
+        
+        window.adjustPrice = function(amount) {
+            if (window.isProcessing) return;
+            
+            window.currentPrice += amount;
+            if (window.currentPrice < 50) window.currentPrice = 50;
+            if (window.currentPrice > 50000) window.currentPrice = 50000;
+            
+            const input = document.getElementById('priceDisplay');
+            input.value = `$${window.currentPrice.toLocaleString()}`;
+            
+            if (window.priceTimeout) clearTimeout(window.priceTimeout);
+            
+            window.priceTimeout = setTimeout(() => {
+                window.selectPrice();
+            }, 2000);
+        }
+
+        window.handleAdSpendInput = function() {
+            const input = document.getElementById('adSpendDisplay');
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            if (value === '') {
+                value = '0';
+            }
+            
+            const numericValue = parseInt(value);
+            if (numericValue >= 100 && numericValue <= 50000) {
+                window.currentAdSpend = numericValue;
+                
+                if (window.adSpendTimeout) clearTimeout(window.adSpendTimeout);
+                
+                window.adSpendTimeout = setTimeout(() => {
+                    window.selectAdSpend();
+                }, 2000);
+            }
+        }
+
+        window.clearAdSpendTimeout = function() {
+            if (window.adSpendTimeout) clearTimeout(window.adSpendTimeout);
+        }
+
+        window.formatAdSpendInput = function() {
+            const input = document.getElementById('adSpendDisplay');
+            input.value = `$${window.currentAdSpend.toLocaleString()}`;
+        }
+        
+        window.selectPrice = function() {
+            if (window.isProcessing) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.servicePrice = window.currentPrice;
+            window.currentStep = 4;
+            window.updateStepIndicator(window.currentStep);
+            
+            setTimeout(() => {
+                window.showAdvertisingQuestion();
+                window.isProcessing = false;
+            }, 500);
+        }
+        
+        window.selectAdvertising = function(hasAds) {
+            if (window.isProcessing) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.hasAdvertising = hasAds;
+            
+            document.getElementById('yesBtn').classList.toggle('selected', hasAds);
+            document.getElementById('noBtn').classList.toggle('selected', !hasAds);
+            
+            window.currentStep = 5;
+            window.updateStepIndicator(window.currentStep);
+            
+            setTimeout(() => {
+                if (hasAds) {
+                    window.showAdSpendQuestion();
+                } else {
+                    window.calculatorData.monthlyAdSpend = 0;
+                    window.currentStep = 6;
+                    window.updateStepIndicator(window.currentStep);
+                    setTimeout(() => {
+                        window.showCustomerQuestion();
+                    }, 300);
+                }
+                window.isProcessing = false;
+            }, 800);
+        }
+        
+        window.adjustAdSpend = function(amount) {
+            if (window.isProcessing) return;
+            
+            window.currentAdSpend += amount;
+            if (window.currentAdSpend < 100) window.currentAdSpend = 100;
+            if (window.currentAdSpend > 50000) window.currentAdSpend = 50000;
+            
+            const input = document.getElementById('adSpendDisplay');
+            if (input) {
+                input.value = `$${window.currentAdSpend.toLocaleString()}`;
+            }
+            
+            if (window.adSpendTimeout) clearTimeout(window.adSpendTimeout);
+            
+            window.adSpendTimeout = setTimeout(() => {
+                window.selectAdSpend();
+            }, 2000);
+        }
+        
+        window.selectAdSpend = function() {
+            if (window.isProcessing) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.monthlyAdSpend = window.currentAdSpend;
+            window.currentStep = 6;
+            window.updateStepIndicator(window.currentStep);
+            
+            setTimeout(() => {
+                window.showCustomerQuestion();
+                window.isProcessing = false;
+            }, 500);
+        }
+        
+        window.handleCustomerInput = function(event) {
+            const input = document.getElementById('customerNumberInput');
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            if (value === '') {
+                value = '10';
+            }
+            
+            const numericValue = parseInt(value);
+            if (numericValue >= 10 && numericValue <= 10000) {
+                window.currentCustomers = numericValue;
+                
+                if (window.customerTimeout) clearTimeout(window.customerTimeout);
+                
+                window.customerTimeout = setTimeout(() => {
+                    window.selectCustomers();
+                }, 2000);
+            }
+        }
+
+        window.clearCustomerTimeout = function() {
+            if (window.customerTimeout) clearTimeout(window.customerTimeout);
+        }
+
+        window.formatCustomerInput = function() {
+            const input = document.getElementById('customerNumberInput');
+            if (input) {
+                input.value = window.currentCustomers.toLocaleString();
+            }
+        }
+        
+        window.adjustCustomers = function(amount) {
+            if (window.isProcessing) return;
+            
+            window.currentCustomers += amount;
+            if (window.currentCustomers < 10) window.currentCustomers = 10;
+            if (window.currentCustomers > 10000) window.currentCustomers = 10000;
+            
+            const input = document.getElementById('customerNumberInput');
+            if (input) {
+                input.value = window.currentCustomers.toLocaleString();
+            }
+            
+            if (window.customerTimeout) clearTimeout(window.customerTimeout);
+            
+            window.customerTimeout = setTimeout(() => {
+                window.selectCustomers();
+            }, 2000);
+        }
+        
+        window.selectCustomers = function() {
+            if (window.isProcessing) return;
+            
+            window.isProcessing = true;
+            window.calculatorData.customerCount = window.currentCustomers;
+            
+            setTimeout(() => {
+                window.showCalculateButton();
+                window.isProcessing = false;
+            }, 500);
+        }
+
+        // Calculate results and show celebration
+        window.calculateAndShowResults = function() {
+            // Calculate all the revenue data
+            const initialResponseRate = 0.18;
+            const emailFatigueDecline = 0.15;
+            const monthlyDatabaseGrowth = 0.10;
+            
+            let totalAnnualRevenue = 0;
+            let monthlyBreakdown = [];
+            let currentCustomerBase = window.calculatorData.customerCount;
+            let currentResponseRate = initialResponseRate;
+            
+            for (let month = 1; month <= 12; month++) {
+                const expectedResponses = Math.round(currentCustomerBase * currentResponseRate);
+                const monthlyRevenue = expectedResponses * window.calculatorData.servicePrice;
+                
+                monthlyBreakdown.push({
+                    month: month,
+                    customerBase: Math.round(currentCustomerBase),
+                    responseRate: (currentResponseRate * 100).toFixed(1),
+                    expectedResponses: expectedResponses,
+                    monthlyRevenue: monthlyRevenue
+                });
+                
+                totalAnnualRevenue += monthlyRevenue;
+                
+                currentCustomerBase *= (1 + monthlyDatabaseGrowth);
+                currentResponseRate *= (1 - emailFatigueDecline);
+                
+                if (currentResponseRate < 0.05) currentResponseRate = 0.05;
+            }
+            
+            const annualAdSpend = window.calculatorData.monthlyAdSpend * 12;
+            const netSavings = annualAdSpend;
+            const totalROI = totalAnnualRevenue + netSavings;
+            
+            const weeklyRevenuePotential = totalAnnualRevenue / 52;
+            
+            // Store results globally
+            window.calculationResults = {
+                businessType: window.calculatorData.businessType,
+                service: window.calculatorData.mainService,
+                price: window.calculatorData.servicePrice,
+                customers: window.calculatorData.customerCount,
+                hasAdvertising: window.calculatorData.hasAdvertising,
+                monthlyAdSpend: window.calculatorData.monthlyAdSpend,
+                totalAnnualRevenue: Math.round(totalAnnualRevenue),
+                annualAdSpend: annualAdSpend,
+                netSavings: netSavings,
+                totalROI: Math.round(totalROI),
+                weeklyRevenuePotential: Math.round(weeklyRevenuePotential),
+                monthlyBreakdown: monthlyBreakdown,
+                firstCampaignRevenue: monthlyBreakdown[0].monthlyRevenue
+            };
+            
+            // Hide calculator, show celebration
+            document.getElementById('calculatorPage').style.display = 'none';
+            document.getElementById('celebrationPage').classList.add('active');
+            
+            // Initialize celebration
+            setTimeout(() => {
+                initializeCelebration();
+            }, 100);
+        }
+
+        // Celebration animations
+        function initializeCelebration() {
+            const data = window.calculationResults;
+            
+            // Show the first campaign revenue
+            document.getElementById('celebrationNumber').textContent = `$${data.firstCampaignRevenue.toLocaleString()}`;
+            
+            // Create effects
+            createFireParticles();
+            createFallingCoins();
+            createRisingBalloons();
+            
+            // After 5 seconds, transition to VSL page
+            setTimeout(() => {
+                document.getElementById('celebrationPage').classList.remove('active');
+                document.getElementById('vslPage').classList.add('active');
+                updateVSLValues(data);
+            }, 5000);
+        }
+
+        function createFireParticles() {
+            const container = document.getElementById('fireContainer');
+            const particleCount = 150;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const fire = document.createElement('div');
+                fire.className = 'fire';
+                fire.style.left = Math.random() * 100 + '%';
+                fire.style.top = Math.random() * 100 + '%';
+                fire.style.animationDelay = Math.random() * 2 + 's';
+                fire.style.animationDuration = (0.3 + Math.random() * 0.4) + 's';
+                container.appendChild(fire);
+            }
+        }
+
+        function createFallingCoins() {
+            const container = document.getElementById('coinsContainer');
+            
+            function addCoin() {
+                const coin = document.createElement('div');
+                coin.className = 'coin';
+                coin.style.left = Math.random() * 100 + '%';
+                coin.style.animationDuration = (2 + Math.random() * 2) + 's';
+                coin.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(coin);
+                
+                setTimeout(() => {
+                    if (coin.parentNode) {
+                        coin.parentNode.removeChild(coin);
+                    }
+                }, 5000);
+            }
+            
+            const coinInterval = setInterval(addCoin, 200);
+            setTimeout(() => clearInterval(coinInterval), 5000);
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(addCoin, i * 100);
+            }
+        }
+
+        function createRisingBalloons() {
+            const container = document.getElementById('balloonsContainer');
+            const colors = ['red', 'blue', 'green', 'purple', 'yellow'];
+            
+            function addBalloon() {
+                const balloon = document.createElement('div');
+                balloon.className = `balloon ${colors[Math.floor(Math.random() * colors.length)]}`;
+                balloon.style.left = Math.random() * 100 + '%';
+                balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
+                balloon.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(balloon);
+                
+                setTimeout(() => {
+                    if (balloon.parentNode) {
+                        balloon.parentNode.removeChild(balloon);
+                    }
+                }, 12000);
+            }
+            
+            const balloonInterval = setInterval(addBalloon, 400);
+            setTimeout(() => clearInterval(balloonInterval), 5000);
+            
+            for (let i = 0; i < 10; i++) {
+                setTimeout(addBalloon, i * 200);
+            }
+        }
+
+        // Update VSL page with calculated values
+        function updateVSLValues(data) {
+            // Update all rotating headline values
+            const headlineRevenues = ['vslRevenue1', 'vslRevenue2', 'vslRevenue3', 'vslRevenue4', 'vslRevenue5', 
+                                      'vslRevenue6', 'vslRevenue7', 'vslRevenue8', 'vslRevenue9', 'vslRevenue10'];
+            headlineRevenues.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = data.firstCampaignRevenue.toLocaleString();
+                }
+            });
+            
+            // Update stats
+            document.getElementById('statCustomers').textContent = data.customers.toLocaleString();
+            document.getElementById('statFirstMonth').textContent = `$${data.firstCampaignRevenue.toLocaleString()}`;
+            document.getElementById('statAnnual').textContent = `$${data.totalAnnualRevenue.toLocaleString()}`;
+            document.getElementById('statWeekly').textContent = `$${data.weeklyRevenuePotential.toLocaleString()}`;
+            
+            // Update cost of delay with breakdown
+            const weeklyAdSpend = data.hasAdvertising ? Math.round(data.monthlyAdSpend / 4.33) : 0;
+            
+            // Week 1
+            const revenue1Week = data.weeklyRevenuePotential;
+            const adSpend1Week = weeklyAdSpend;
+            const total1Week = revenue1Week + adSpend1Week;
+            
+            document.getElementById('costRevenue1Week').textContent = `-$${revenue1Week.toLocaleString()}`;
+            document.getElementById('costAdSpend1Week').textContent = `-$${adSpend1Week.toLocaleString()}`;
+            document.getElementById('costTotal1Week').textContent = `-$${total1Week.toLocaleString()}`;
+            document.getElementById('costAdSpend1WeekRow').style.display = data.hasAdvertising ? 'flex' : 'none';
+            
+            // Week 2
+            const revenue2Weeks = revenue1Week * 2;
+            const adSpend2Weeks = adSpend1Week * 2;
+            const total2Weeks = revenue2Weeks + adSpend2Weeks;
+            
+            document.getElementById('costRevenue2Weeks').textContent = `-$${revenue2Weeks.toLocaleString()}`;
+            document.getElementById('costAdSpend2Weeks').textContent = `-$${adSpend2Weeks.toLocaleString()}`;
+            document.getElementById('costTotal2Weeks').textContent = `-$${total2Weeks.toLocaleString()}`;
+            document.getElementById('costAdSpend2WeeksRow').style.display = data.hasAdvertising ? 'flex' : 'none';
+            
+            // Month 1
+            const revenue1Month = Math.round(revenue1Week * 4.33);
+            const adSpend1Month = data.monthlyAdSpend;
+            const total1Month = revenue1Month + adSpend1Month;
+            
+            document.getElementById('costRevenue1Month').textContent = `-$${revenue1Month.toLocaleString()}`;
+            document.getElementById('costAdSpend1Month').textContent = `-$${adSpend1Month.toLocaleString()}`;
+            document.getElementById('costTotal1Month').textContent = `-$${total1Month.toLocaleString()}`;
+            document.getElementById('costAdSpend1MonthRow').style.display = data.hasAdvertising ? 'flex' : 'none';
+            
+            // 6 Months
+            const revenue6Months = Math.round(revenue1Week * 26);
+            const adSpend6Months = data.monthlyAdSpend * 6;
+            const total6Months = revenue6Months + adSpend6Months;
+            
+            document.getElementById('costRevenue6Months').textContent = `-$${revenue6Months.toLocaleString()}`;
+            document.getElementById('costAdSpend6Months').textContent = `-$${adSpend6Months.toLocaleString()}`;
+            document.getElementById('costTotal6Months').textContent = `-$${total6Months.toLocaleString()}`;
+            document.getElementById('costAdSpend6MonthsRow').style.display = data.hasAdvertising ? 'flex' : 'none';
+            
+            // Update CTA section
+            document.getElementById('ctaCustomers').textContent = data.customers.toLocaleString() + ' dormant customers';
+            document.getElementById('ctaRevenue').textContent = `$${data.firstCampaignRevenue.toLocaleString()}`;
+        }
+
+        // CTA Functions
+        function bookStrategy() {
+            // Replace with your actual booking URL
+            window.open('https://yoursite.com/book-strategy-call', '_blank');
+        }
+
+        function openDisclosures() {
+            // Replace with your actual disclosures page URL
+            window.open('https://youroutsoursecmo.com/earnings-disclaimer.html', '_blank');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            window.showBusinessTypeQuestion();
+        });
+    </script>
+</body>
+</html>
